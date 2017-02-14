@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>532603111238-g5h51pao5n075njfa0f5fstgqjljggk3.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.532603111238-g5h51pao5n075njfa0f5fstgqjljggk3</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBLt6-PJr345fpiDkYP0SECNK0yhvGwIcw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>532603111238</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.fabiodutra.laudobuilder</string>
+	<key>PROJECT_ID</key>
+	<string>laudobuilder</string>
+	<key>STORAGE_BUCKET</key>
+	<string>laudobuilder.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:532603111238:ios:f42b54e0a711f19b</string>
+	<key>DATABASE_URL</key>
+	<string>https://laudobuilder.firebaseio.com</string>
+</dict>
+</plist>
