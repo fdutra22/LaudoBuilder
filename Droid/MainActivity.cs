@@ -28,8 +28,8 @@ namespace LaudoBuilder.Droid
 				var intent = new Intent(this, typeof(RegistrationIntentService));
 				StartService(intent);
 			}
-			var listener = new BroadcastAndroid();
-			RegisterReceiver(listener, new IntentFilter(Intent.ActionBootCompleted));
+			//var listener = new BroadcastAndroid();
+			//RegisterReceiver(listener, new IntentFilter(Intent.ActionBootCompleted));
 			LoadApplication(new App());
 		}
 
