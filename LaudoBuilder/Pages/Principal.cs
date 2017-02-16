@@ -14,10 +14,10 @@ namespace LaudoBuilder.Pages
 			Master = new MenuPage();
 			if (Device.OS == TargetPlatform.iOS)
 			{
-				Detail = new NavigationPage(new DadosPage());
+				Detail = new NavigationPage(new ListaLaudoPage());
 			}
 			else {
-				Detail = new DadosPage();
+				Detail = new ListaLaudoPage();
 			}
 			masterPage.ListView.ItemSelected += OnItemSelected;
 			IsPresented = false;

@@ -1,20 +1,31 @@
 ﻿using LaudoBuilder.Estilo;
 using Xamarin.Forms;
 using LaudoBuilder.Utils;
+using System.Net.Http;
+using Newtonsoft.Json;
+using LaudoBuilder.Model;
+using System.Collections.ObjectModel;
+using System.Text;
 
 namespace LaudoBuilder.Pages
 {
     public class ModoLaudoPage: BasePreferenciaPage
     {
-        Switch _RadarMovelSwitch;
-        Switch _PedagioSwitch;
-        Switch _PoliciaRodoviariaSwitch;
-        Switch _LombadaSwitch;
-        Switch _AlertaInteligenteSwitch;
-        Switch _BeepAvisoSwitch;
-        Switch _VibrarAlertaSwitch;
-        Switch _SobreposicaoVisualSwitch;
+        Switch _Pisos;
+        Switch _Esquadrias;
+        Switch _Impermeabilizacao;
+        Switch _InstalacaoEletrica;
+        Switch _InstalacaoHidraulica;
+        Switch _Revestimento;
+        Switch _Instalacaodegas;
+        Switch _Terraplanagem;
+        Switch _Fundacao;
+        Switch _Infraestrutura;
+        Switch _Superestrutura;
+        Button _sincronizar;
 
+        ObservableCollection<PreferenciaInfo> laudos = new ObservableCollection<PreferenciaInfo>();
+        
         protected override string Titulo
         {
             get
@@ -26,88 +37,149 @@ namespace LaudoBuilder.Pages
         protected override void inicializarComponente()
         {
 			EstiloUtils.inicializar();
-            _RadarMovelSwitch = new Switch
+
+            laudos.Add(new PreferenciaInfo() { Titulo = "titulo", Valor = "Laudo 1"});
+            _Pisos = new Switch
             {
                 Style = EstiloUtils.Preferencia.Checkbox,
-                IsToggled = PreferenciaUtils.RadarMovel
+                IsToggled = PreferenciaUtils.Pisos
             };
-            _RadarMovelSwitch.Toggled += (sender, e) =>
-            {
-                PreferenciaUtils.RadarMovel = e.Value;
+            _Pisos.Toggled += (sender, e) => {
+                PreferenciaUtils.Pisos = e.Value;
+                laudos.Add(new PreferenciaInfo() { Preferencia = "pisos", ValorBool = e.Value });
             };
 
-            _PedagioSwitch = new Switch
+            _Esquadrias = new Switch
             {
                 Style = EstiloUtils.Preferencia.Checkbox,
-                IsToggled = PreferenciaUtils.Pedagio
+                IsToggled = PreferenciaUtils.Esquadrias
             };
-            _PedagioSwitch.Toggled += (sender, e) =>
-            {
-                PreferenciaUtils.Pedagio = e.Value;
+            _Esquadrias.Toggled += (sender, e) => {
+                PreferenciaUtils.Esquadrias = e.Value;
+                laudos.Add(new PreferenciaInfo() { Preferencia = "esquadrias", ValorBool = e.Value });
             };
 
-            _PoliciaRodoviariaSwitch = new Switch
+            _Impermeabilizacao = new Switch
             {
                 Style = EstiloUtils.Preferencia.Checkbox,
-                IsToggled = PreferenciaUtils.PoliciaRodoviaria
+                IsToggled = PreferenciaUtils.Impermeabilizacao
             };
-            _PoliciaRodoviariaSwitch.Toggled += (sender, e) =>
-            {
-                PreferenciaUtils.PoliciaRodoviaria = e.Value;
+            _Impermeabilizacao.Toggled += (sender, e) => {
+                PreferenciaUtils.Impermeabilizacao = e.Value;
+                laudos.Add(new PreferenciaInfo() { Preferencia = "impermeabilizacao", ValorBool = e.Value });
             };
 
-            _LombadaSwitch = new Switch
+            _InstalacaoEletrica = new Switch
             {
                 Style = EstiloUtils.Preferencia.Checkbox,
-                IsToggled = PreferenciaUtils.Lombada
+                IsToggled = PreferenciaUtils.InstalacaoEletrica
             };
-            _LombadaSwitch.Toggled += (sender, e) =>
-            {
-                PreferenciaUtils.Lombada = e.Value;
+            _InstalacaoEletrica.Toggled += (sender, e) => {
+                PreferenciaUtils.InstalacaoEletrica = e.Value;
+                laudos.Add(new PreferenciaInfo() { Preferencia = "instalacaoeletrica", ValorBool = e.Value });
             };
 
-            _AlertaInteligenteSwitch = new Switch
+            _InstalacaoHidraulica = new Switch
             {
                 Style = EstiloUtils.Preferencia.Checkbox,
-                IsToggled = PreferenciaUtils.AlertaInteligente
+                IsToggled = PreferenciaUtils.InstalacaoHidraulica
             };
-            _AlertaInteligenteSwitch.Toggled += (sender, e) =>
-            {
-                PreferenciaUtils.AlertaInteligente = e.Value;
+            _InstalacaoHidraulica.Toggled += (sender, e) => {
+                PreferenciaUtils.InstalacaoHidraulica = e.Value;
+                laudos.Add(new PreferenciaInfo() { Preferencia = "instalacaohidraulica", ValorBool = e.Value });
             };
 
-            _BeepAvisoSwitch = new Switch
+            _Revestimento = new Switch
             {
                 Style = EstiloUtils.Preferencia.Checkbox,
-                IsToggled = PreferenciaUtils.BeepAviso
+                IsToggled = PreferenciaUtils.Revestimento
             };
-            _BeepAvisoSwitch.Toggled += (sender, e) =>
-            {
-                PreferenciaUtils.BeepAviso = e.Value;
+            _Revestimento.Toggled += (sender, e) => {
+                PreferenciaUtils.Revestimento = e.Value;
+                laudos.Add(new PreferenciaInfo() { Preferencia = "revestimento", ValorBool = e.Value });
             };
 
-            _VibrarAlertaSwitch = new Switch
+            _Instalacaodegas = new Switch
             {
                 Style = EstiloUtils.Preferencia.Checkbox,
-                IsToggled = PreferenciaUtils.VibrarAlerta
-            };
-            _VibrarAlertaSwitch.Toggled += (sender, e) =>
-            {
-                PreferenciaUtils.VibrarAlerta = e.Value;
+                IsToggled = PreferenciaUtils.Instalacaodegas
             };
 
-            
+            _Instalacaodegas.Toggled += (sender, e) => {
+                PreferenciaUtils.Instalacaodegas = e.Value;
+                laudos.Add(new PreferenciaInfo() { Preferencia = "instalacadegas", ValorBool = e.Value });
+            };
+
+            _Terraplanagem = new Switch
+            {
+                Style = EstiloUtils.Preferencia.Checkbox,
+                IsToggled = PreferenciaUtils.Terraplanagem
+            };
+            _Terraplanagem.Toggled += (sender, e) => {
+                PreferenciaUtils.Terraplanagem = e.Value;
+                laudos.Add(new PreferenciaInfo() { Preferencia = "terraplanagem", ValorBool = e.Value });
+            };
+
+            _Fundacao = new Switch
+            {
+                Style = EstiloUtils.Preferencia.Checkbox,
+                IsToggled = PreferenciaUtils.Fundacao
+            };
+            _Fundacao.Toggled += (sender, e) => {
+                PreferenciaUtils.Fundacao = e.Value;
+                laudos.Add(new PreferenciaInfo() { Preferencia = "fundacao", ValorBool = e.Value });
+            };
+
+            _Infraestrutura = new Switch
+            {
+                Style = EstiloUtils.Preferencia.Checkbox,
+                IsToggled = PreferenciaUtils.Infraestrutura
+            };
+            _Infraestrutura.Toggled += (sender, e) => {
+                PreferenciaUtils.Infraestrutura = e.Value;
+                laudos.Add(new PreferenciaInfo() { Preferencia = "infraestrutura", ValorBool = e.Value });
+            };
+
+            _Superestrutura = new Switch
+            {
+                Style = EstiloUtils.Preferencia.Checkbox,
+                IsToggled = PreferenciaUtils.Superestrutura
+            };
+            _Superestrutura.Toggled += (sender, e) => {
+                PreferenciaUtils.Superestrutura = e.Value;
+                laudos.Add(new PreferenciaInfo() { Preferencia = "superestrutura", ValorBool = e.Value });
+            };
+
+            _sincronizar = new Button
+            {
+                Text = "Sincronizar"
+            };
+            _sincronizar.Clicked += (sender, e) =>
+            {
+                HttpClient client = new HttpClient();
+                string url = "http://laudobuilder.esy.es/api/laudo";
+                string contentType = "application/json";
+
+                var content = new StringContent(
+                    JsonConvert.SerializeObject( laudos, Formatting.Indented), Encoding.UTF8, contentType);
+
+                var result = client.PostAsync(url, content).ConfigureAwait(false);
+            };
         }
 
         protected override void inicializarTela()
         {
-            adicionarSwitch(_RadarMovelSwitch, "Radar Móvel");
-            adicionarSwitch(_PedagioSwitch, "Pedágio");
-            adicionarSwitch(_PoliciaRodoviariaSwitch, "Polícia Rodoviária");
-            adicionarSwitch(_LombadaSwitch, "Lombada");
-            adicionarSwitch(_AlertaInteligenteSwitch, "Alerta Inteligente", "Só emitir alerta caso a velocidade atual esteja próxima da velocidade limite");
-            adicionarSwitch(_BeepAvisoSwitch, "Beep de Aviso", "Emitir som ao passar por um radar");
-            adicionarSwitch(_VibrarAlertaSwitch, "Vibrar ao emitir Alerta");
+            adicionarSwitch(_Pisos, "Pisos");
+            adicionarSwitch(_Esquadrias, "Esquadrias de aluminio");
+            adicionarSwitch(_Impermeabilizacao, "Impermeabilizações");
+            adicionarSwitch(_InstalacaoEletrica, "Instalações eletricas");
+            adicionarSwitch(_InstalacaoHidraulica, "Instalações hidraulicas");
+            adicionarSwitch(_Revestimento, "Revestimento interno");
+            adicionarSwitch(_Instalacaodegas, "Instalação de gás");
+            adicionarSwitch(_Terraplanagem, "Terraplanagem");
+            adicionarSwitch(_Fundacao, "Fundação");
+            adicionarSwitch(_Infraestrutura, "Infraestrutura");
+            adicionarSwitch(_Superestrutura, "Superestrutura - alvenaria");
         }
     }
 }

@@ -1,6 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using LaudoBuilder.Model;
+﻿using LaudoBuilder.Model;
 using Xamarin.Forms;
+using LaudoBuilder.Utils;
+using LaudoBuilder.BLL;
+using LaudoBuilder.Factory;
+using System.Collections.Generic;
+using Rg.Plugins.Popup.Extensions;
+using System.Collections.ObjectModel;
 
 namespace LaudoBuilder.Pages
 {
@@ -14,11 +19,13 @@ namespace LaudoBuilder.Pages
 			StackLayout listaView = new StackLayout();
 			listaView.VerticalOptions = LayoutOptions.Fill;
 			listaView.HorizontalOptions = LayoutOptions.Fill;
-
+            
 			ObservableCollection<LaudoInfo> laudos = new ObservableCollection<LaudoInfo>();
-			laudos.Add(new LaudoInfo() { Titulo = "Laudo 1", Imagem = "icon.png" });
-			laudos.Add(new LaudoInfo() { Titulo = "Laudo 2", Imagem = "icon.png" });
-			laudos.Add(new LaudoInfo() { Titulo = "Laudo 3", Imagem = "icon.png" });
+			laudos.Add(new LaudoInfo() { Titulo = "Laudo 1", ImagemUrl = "icon.png" });
+
+            
+            LaudoBLL regraLaudo = LaudoFactory.create();
+            //IList<LaudoInfo> laudos =  regraLaudo.listar();
 
 			ListView listaLaudos = new ListView();
 			listaLaudos.RowHeight = 120;
@@ -31,43 +38,44 @@ namespace LaudoBuilder.Pages
 			listaLaudos.HorizontalOptions = LayoutOptions.Center;
 
 			listaLaudos.BindingContext = laudos;
-			Image AdicionarRadarButton = new Image
+			Image AdicionarLaudoButton = new Image
 			{
 				Aspect = Aspect.AspectFit,
 				Source = ImageSource.FromFile("ic_add_box_black_24dp.png"),
-				WidthRequest = 80,
-				HeightRequest = 80,
+				WidthRequest = TelaUtils.Largura * 0.1,
+                HeightRequest = TelaUtils.Largura * 0.1,				
 				VerticalOptions = LayoutOptions.End,
 				HorizontalOptions = LayoutOptions.End,
 				Margin = new Thickness(0, 0, 10, 10)
 			};
-			AdicionarRadarButton.GestureRecognizers.Add(
+            AdicionarLaudoButton.GestureRecognizers.Add(
 					new TapGestureRecognizer()
 					{
 						Command = new Command(() =>
 						{
-							adcionarGrupo();
+                            adcionarLaudo();
 						}
 					)
 					});
 
 			listaView.Children.Add(listaLaudos);
-			listaView.Children.Add(AdicionarRadarButton);
+			listaView.Children.Add(AdicionarLaudoButton);
 			Content = listaView;
 		}
 
-		public void adcionarGrupo()
-		{
-			//NavigationX.create(this).PushModalAsync(new AdcionarGrupoPopUp());
+        
 
-		}
+        public  void adcionarLaudo()
+        {
+            var page = new NovoLaudoPage();
+            App.Current.MainPage.Navigation.PushPopupAsync(page);
+            //Navigation.PushPopupAsync(page);
+        }
 
-		public void OnTap(object sender, ItemTappedEventArgs e)
+        public void OnTap(object sender, ItemTappedEventArgs e)
 		{
 
 			//GrupoInfo item = (GrupoInfo)e.Item;
-
-
 
 			App.Current.MainPage.Navigation.PushAsync(new ModoLaudoPage());
 
@@ -79,27 +87,27 @@ namespace LaudoBuilder.Pages
 			public GruposCelula()
 			{
 
-				var excluirGrupo = new MenuItem
+				var excluirLaudo = new MenuItem
 				{
 					Text = "Excluir"
 				};
 
-				excluirGrupo.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
-				excluirGrupo.Clicked += (sender, e) =>
+                excluirLaudo.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
+                excluirLaudo.Clicked += (sender, e) =>
 				{
-					//MensagemInfo mensagem = (MensagemInfo)((MenuItem)sender).BindingContext;
-					//MensagemBLL mensagemBLL = MensagemFactory.create();
-					//mensagemBLL.excluir(mensagem.Id);
+					 LaudoInfo laudo = (LaudoInfo)((MenuItem)sender).BindingContext;
+					 LaudoBLL laudoBLL = LaudoFactory.create();
+                     laudoBLL.excluir(laudo.Titulo);
 
-					//ListView listaGrupos = this.Parent as ListView;
+					 ListView listaGrupos = this.Parent as ListView;
 
-					//listaGrupos.SetBinding(ListView.ItemsSourceProperty, new Binding("."));
-					//listaGrupos.RowHeight = 120;
-					//var grupos = mensagemBLL.pegarMensagem();
-					//listaGrupos.BindingContext = grupos;
-					//listaGrupos.ItemTemplate = new DataTemplate(typeof(GruposCelula));
+					listaGrupos.SetBinding(ListView.ItemsSourceProperty, new Binding("."));
+					listaGrupos.RowHeight = 120;
+					var grupos = laudoBLL.listar();
+					listaGrupos.BindingContext = grupos;
+					listaGrupos.ItemTemplate = new DataTemplate(typeof(GruposCelula));
 				};
-				//ContextActions.Add(excluirGrupo);
+				ContextActions.Add(excluirLaudo);
 
 				StackLayout main = new StackLayout();
 				main.BackgroundColor = Color.Transparent;
@@ -126,7 +134,7 @@ namespace LaudoBuilder.Pages
 					VerticalOptions = LayoutOptions.Center,
 					Source = "ic_add_a_photo_48pt.png"
 				};
-				foto.SetBinding(Image.SourceProperty, new Binding("Imagem"));
+				foto.SetBinding(Image.SourceProperty, new Binding("Image"));
 
 				Label nome = new Label
 				{
@@ -139,16 +147,7 @@ namespace LaudoBuilder.Pages
 				nome.SetBinding(Label.TextProperty, new Binding("Titulo"));
 
 
-				Label descricao = new Label
-				{
-					TextColor = Color.FromHex(TemaInfo.PrimaryText),
-					FontFamily = "Roboto-Condensed",
-					FontSize = 20,
-					HorizontalOptions = LayoutOptions.Start,
-					VerticalOptions = LayoutOptions.Center,
-				};
-				//descricao.SetBinding(Label.TextProperty, new Binding("DescricaoStr"));
-
+				
 
 				var frameOuter = new Frame();
 				frameOuter.BackgroundColor = Color.FromHex(TemaInfo.BlueAccua);
@@ -168,7 +167,7 @@ namespace LaudoBuilder.Pages
 
 				stackLeft.Children.Add(foto);
 				stackRight.Children.Add(nome);
-				stackRight.Children.Add(descricao);
+				
 
 				main.Children.Add(stackLeft);
 				main.Children.Add(stackRight);

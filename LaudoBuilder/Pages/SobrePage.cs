@@ -21,6 +21,7 @@ namespace LaudoBuilder.Pages
 				{
 					BackgroundColor = Color.White,
 					Orientation = StackOrientation.Vertical,
+                    Margin = new Thickness(30,30,30,30),
 					Children = {
 						new StackLayout {
 							Orientation = StackOrientation.Vertical,
@@ -49,8 +50,9 @@ namespace LaudoBuilder.Pages
 							VerticalOptions = LayoutOptions.Center,
 							Children = {
 								new Label {
-									Text = "Desenvolvido Por",
-									HorizontalOptions = LayoutOptions.Center
+									Text = "Desenvolvido Por Fábio Lopes - 993978230",
+									HorizontalOptions = LayoutOptions.Center,
+                                    HorizontalTextAlignment = TextAlignment.Center
 								},
 								_LogoClubImage
 							}
@@ -64,14 +66,14 @@ namespace LaudoBuilder.Pages
 		{
 			_NavIconImage = new Image
 			{
-				Source = ImageSource.FromFile("navicon.png"),
-				WidthRequest = 180,
+				Source = ImageSource.FromFile("icon.png"),
+				WidthRequest = 220,
 				HorizontalOptions = LayoutOptions.Center
 			};
 			_LogoClubImage = new Image
 			{
-				Source = ImageSource.FromFile("logoclubmanagement.png"),
-				WidthRequest = 200
+				Source = ImageSource.FromFile("icon.png"),
+				WidthRequest = 170
 			};
 		}
 

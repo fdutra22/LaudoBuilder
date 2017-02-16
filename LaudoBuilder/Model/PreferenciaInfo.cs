@@ -8,5 +8,7 @@ namespace LaudoBuilder.Model
 			public string Preferencia { get; set; }
 			public string Valor { get; set; }
 
+            public bool ValorBool { get; set; }
+            public string Titulo { get; set; }
 	}
 }

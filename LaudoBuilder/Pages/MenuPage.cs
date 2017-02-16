@@ -1,4 +1,5 @@
-﻿using LaudoBuilder.Model;
+﻿using LaudoBuilder.IDAL;
+using LaudoBuilder.Model;
 using System.Collections.Generic;
 using Xamarin.Forms;
 
@@ -34,8 +35,8 @@ namespace LaudoBuilder.Pages
 				BackgroundColor = Color.Transparent, //Color.FromHex("#ffffff"), //,
 				Children = {
 					new Image {
-						Source = "navicon.png",
-						HorizontalOptions = LayoutOptions.Start,
+						Source = "icon.png",
+						HorizontalOptions = LayoutOptions.Center,
 						VerticalOptions = LayoutOptions.Center,
 						WidthRequest = 80,
 						HeightRequest = 80
@@ -93,6 +94,7 @@ namespace LaudoBuilder.Pages
 				Icone = "ic_content_paste_black_24dp.png",
 				click = (sender, e) =>
 				{
+
 					App.Current.MainPage.Navigation.PushAsync(new ListaLaudoPage());
 				}
 			});
@@ -106,7 +108,7 @@ namespace LaudoBuilder.Pages
 			grupo.Add(new MenuItemInfo
 			{
 				Titulo = "Instruções",
-				Icone = "instrucoes.png",
+				Icone = "ic_info_outline_black_24dp.png",
 				click = (sender, e) =>
 				{
 					App.Current.MainPage.Navigation.PushAsync(new InstrucaoPage());
@@ -115,7 +117,7 @@ namespace LaudoBuilder.Pages
 			grupo.Add(new MenuItemInfo
 			{
 				Titulo = "Sobre",
-				Icone = "sobre.png",
+				Icone = "ic_help_outline_black_24dp.png",
 				click = (sender, e) =>
 				{
 					App.Current.MainPage.Navigation.PushAsync(new SobrePage());
@@ -133,11 +135,10 @@ namespace LaudoBuilder.Pages
 			grupo.Add(new MenuItemInfo
 			{
 				Titulo = "Sair",
-				Icone = "sair.png",
+				Icone = "ic_exit_to_app_black_24dp.png",
 				click =  (sender, e) =>
 				{
-					App.Current.MainPage.Navigation.PushAsync(new SairPage(), true);
-					//await Navigation.PushPopupAsync(new InstrucaoPage());
+                    DependencyService.Get<ICloseApp>().closeApplication();
 				}
 			});
 

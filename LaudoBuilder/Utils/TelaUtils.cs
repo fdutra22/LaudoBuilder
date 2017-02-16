@@ -1,12 +1,7 @@
-﻿using Radar.IBLL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LaudoBuilder.IDAL;
 using Xamarin.Forms;
 
-namespace Radar.Utils
+namespace LaudoBuilder.Utils
 {
     public static class TelaUtils
     {
@@ -14,80 +9,82 @@ namespace Radar.Utils
 
         public static float Largura
         {
-            get {
+            get
+            {
                 if (_tela == null)
                     _tela = DependencyService.Get<ITela>();
                 return _tela.pegarLargura();
             }
         }
 
-		public static float LarguraSemPixel
-		{
-			get
-			{
-				if (_tela == null)
-					_tela = DependencyService.Get<ITela>();
-				return _tela.pegarLarguraSemPixel();
-			}
-		}
-
-		public static float AlturaSemPixel
-		{
-			get
-			{
-				if (_tela == null)
-					_tela = DependencyService.Get<ITela>();
-				return _tela.pegarAlturaSemPixel();
-			}
-		}
-
-		public static float LarguraDPI
-		{
-			get
-			{
-				if (_tela == null)
-					_tela = DependencyService.Get<ITela>();
-				return _tela.pegarLarguraDPI();
-			}
-		}
-
-		public static float AlturaDPI
-		{
-			get
-			{
-				if (_tela == null)
-					_tela = DependencyService.Get<ITela>();
-				return _tela.pegarAlturaDPI();
-			}
-		}
-
-        public static float Altura {
+        public static float LarguraSemPixel
+        {
             get
-			{
+            {
+                if (_tela == null)
+                    _tela = DependencyService.Get<ITela>();
+                return _tela.pegarLarguraSemPixel();
+            }
+        }
+
+        public static float AlturaSemPixel
+        {
+            get
+            {
+                if (_tela == null)
+                    _tela = DependencyService.Get<ITela>();
+                return _tela.pegarAlturaSemPixel();
+            }
+        }
+
+        public static float LarguraDPI
+        {
+            get
+            {
+                if (_tela == null)
+                    _tela = DependencyService.Get<ITela>();
+                return _tela.pegarLarguraDPI();
+            }
+        }
+
+        public static float AlturaDPI
+        {
+            get
+            {
+                if (_tela == null)
+                    _tela = DependencyService.Get<ITela>();
+                return _tela.pegarAlturaDPI();
+            }
+        }
+
+        public static float Altura
+        {
+            get
+            {
                 if (_tela == null)
                     _tela = DependencyService.Get<ITela>();
                 return _tela.pegarAltura();
             }
         }
 
-		public static string Orientacao
-		{
-			get
-			{
-				if (_tela == null)
-					_tela = DependencyService.Get<ITela>();
-				return _tela.pegarOrientacao();
-			}
-		}
+        public static string Orientacao
+        {
+            get
+            {
+                if (_tela == null)
+                    _tela = DependencyService.Get<ITela>();
+                return _tela.pegarOrientacao();
+            }
+        }
 
-		public static string Dispositivo
-		{
-			get
-			{
-				if (_tela == null)
-					_tela = DependencyService.Get<ITela>();
-				return _tela.pegarDispositivo();
-			}
-		}
+        public static string Dispositivo
+        {
+            get
+            {
+                if (_tela == null)
+                    _tela = DependencyService.Get<ITela>();
+                return _tela.pegarDispositivo();
+            }
+        }
     }
 }

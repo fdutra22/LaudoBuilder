@@ -1,13 +1,11 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Gms.Common;
+using Plugin.Permissions;
+
 
 namespace LaudoBuilder.Droid
 {
@@ -23,7 +21,17 @@ namespace LaudoBuilder.Droid
 
 			global::Xamarin.Forms.Forms.Init(this, bundle);
 
-			if (IsPlayServicesAvailable())
+            TelaAndroid.Largura = (int)Resources.DisplayMetrics.WidthPixels; // real pixels
+            TelaAndroid.Altura = (int)Resources.DisplayMetrics.HeightPixels;
+            TelaAndroid.LarguraSemPixel = (int)Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density; // real pixels
+            TelaAndroid.AlturaSemPixel = (int)Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density; // real pixels
+
+            TelaAndroid.LarguraDPI = (int)Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Xdpi; // real pixels
+            TelaAndroid.AlturaDPI = (int)Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Ydpi; // real pixels
+
+            TelaAndroid.Orientacao = Resources.Configuration.Orientation.ToString();
+
+            if (IsPlayServicesAvailable())
 			{
 				var intent = new Intent(this, typeof(RegistrationIntentService));
 				StartService(intent);
@@ -44,5 +52,11 @@ namespace LaudoBuilder.Droid
 			}
 			return false;
 		}
-	}
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+    }
 }
